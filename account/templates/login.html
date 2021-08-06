@@ -1,0 +1,31 @@
+
+
+<div class="header-bar">
+    <h1>Login</h1>
+</div>
+
+<div class="card-body">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <form method="POST">
+            <p>
+                <label for="id_username">Username:</label>
+                <input type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username">
+            </p>
+
+            <p>
+                <label for="id_password">Password:</label> 
+                <input type="password" name="password" autocomplete="current-password" required id="id_password">
+            </p>        
+            <input class="button" type="submit" value="Login">
+        </form>
+    
+    {% if error %}    <p>{{message}}</p>{%endif%}
+    <p>Don't have an account? <a href="#">Register</a></p>
+</div>
+
+
+
+
+
+
