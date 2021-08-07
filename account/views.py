@@ -49,7 +49,7 @@ def task_add(request):
     time = datetime.datetime.now()
     task = Task(title=title, description=description, created_at=time, user=request.user)
     task.save()
-    return redirect('/')
+    return redirect('home')
 
 def task_delete(request):
     task_id = request.GET.get('id')
@@ -60,4 +60,17 @@ def task_delete(request):
     else: return redirect('home')
 
 def task_update(request):
-    pass
+    if request.method == 'GET':
+        task_id = request.GET.get('id')
+        task = Task.objects.get(id=task_id)
+        if request.user != task.user:
+            return redirect('/')
+        return render(request, 'update.html', {'task':task})
+    task_id = request.POST.get('id')
+    task = Task.objects.get(id=task_id)
+    task.title = request.POST.get('title')
+    task.description = request.POST.get('description')
+    task.is_done = request.POST.get('completed')
+    task.save()
+    return redirect('home')
+    
