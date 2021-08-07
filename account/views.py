@@ -22,10 +22,22 @@ def logout_user(request):
     logout(request)
     return redirect('/')
 
+def register_user(request):
+    if request.method == 'GET':
+        return render(request, 'register.html')
+    username = request.POST.get('username')
+    email = request.POST.get('email')
+    password = request.POST.get('password')
+    user = User.objects.create_user(username=username, email=email, password=password)
+    user.save()
+    return redirect('login')
+
 def home_task(request):
-    tasks = Task.objects.all()
-    context = {'tasks':tasks}
-    return render(request, 'index.html', context)
+    if request.user.is_authenticated:
+        tasks = Task.objects.filter(user=request.user)
+        context = {'tasks':tasks}
+        return render(request, 'index.html', context)
+    return redirect('login')
 
 def task_add(request):
     if request.method == 'GET':
@@ -33,6 +45,6 @@ def task_add(request):
     title = request.POST.get('title')
     description = request.POST.get('description')
     time = datetime.datetime.now()
-    task = Task(title=title, description=description, created_at=time)
+    task = Task(title=title, description=description, created_at=time, user=request.user)
     task.save()
     return redirect('/')
