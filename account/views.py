@@ -29,8 +29,10 @@ def register_user(request):
     email = request.POST.get('email')
     password = request.POST.get('password')
     user = User.objects.create_user(username=username, email=email, password=password)
-    user.save()
-    return redirect('login')
+    if user: 
+        user.save()
+        return redirect('login')
+    else: return render(request, 'register.html', {'error':True, 'message': 'username already exists or some error occured'})
 
 def home_task(request):
     if request.user.is_authenticated:
@@ -48,3 +50,14 @@ def task_add(request):
     task = Task(title=title, description=description, created_at=time, user=request.user)
     task.save()
     return redirect('/')
+
+def task_delete(request):
+    task_id = request.GET.get('id')
+    task = Task.objects.get(id=task_id)
+    if request.user == task.user:
+        task.delete()
+        return redirect('home')
+    else: return redirect('home')
+
+def task_update(request):
+    pass
