@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
+from .models import Task
 # Create your views here.
 def login_user(request):
     if request.method == "GET":
@@ -20,4 +21,6 @@ def logout_user(request):
     return redirect('/')
 
 def home_task(request):
-    return render(request, 'index.html')
+    tasks = Task.objects.all()
+    context = {'tasks':tasks}
+    return render(request, 'index.html', context)

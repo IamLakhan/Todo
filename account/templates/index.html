@@ -1,1 +1,19 @@
 <h1>Hello {{request.user}}</h1>
+{%if request.user.is_authenticated%}
+<h1>Todo list items</h1>
+    <ul>
+        {%for task in tasks%}
+        <li>{{task.id}}</li>
+        <li>{{task.title}}</li>
+        <li>{{task.description}}</li>
+        {%if task.is_done%}
+        <li>task is completed</li>
+        {%else%}
+        <li>task is incomplete</li>
+        {%endif%}
+        <li>{{task.is_done}}</li>
+        <li>{{task.created_at}}</li>
+        <br><br>
+        {%endfor%}
+    </ul>
+{%endif%}
