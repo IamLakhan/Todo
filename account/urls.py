@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from .views import login_user, logout_user, register_user, home_task, task_add, task_delete, task_update
+from .views import *
 
 urlpatterns = [
     path('login/', login_user, name='login'),
@@ -10,4 +10,5 @@ urlpatterns = [
     path('add/', task_add),
     path('delete/', task_delete, name='delete'),
     path('update/', task_update, name='update'),
+    path('notfound/', not_found, name='notfound')
 ]

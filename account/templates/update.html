@@ -1,0 +1,8 @@
+<form enctype="multipart/form-data" method="post">
+{%csrf_token%}
+<input type="hidden" value="{{task.id}}" name="id">
+<input type="text" value="{{task.title}}" name="title">
+<input type="text" value="{{task.description}}" name="description">
+<input type="checkbox" name="completed" id="checkbox" {% if task.is_done%} checked {%endif%}>
+<input type="submit" value="Update">
+</form>

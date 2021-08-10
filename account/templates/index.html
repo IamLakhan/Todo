@@ -13,6 +13,7 @@
         {%endif%}
         <li>Created on {{task.created_at}}</li>
         <li><a href="/delete?id={{task.id}}">Delete</a></li>
+        <li><a href="/update?id={{task.id}}">Update</a></li>
         <br><br>
         {%endfor%}
     </ul>

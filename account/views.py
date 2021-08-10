@@ -57,20 +57,28 @@ def task_delete(request):
     if request.user == task.user:
         task.delete()
         return redirect('home')
-    else: return redirect('home')
+    else: return redirect('notfound')
 
 def task_update(request):
     if request.method == 'GET':
         task_id = request.GET.get('id')
         task = Task.objects.get(id=task_id)
         if request.user != task.user:
-            return redirect('/')
+            return redirect('notfound')
         return render(request, 'update.html', {'task':task})
     task_id = request.POST.get('id')
     task = Task.objects.get(id=task_id)
     task.title = request.POST.get('title')
     task.description = request.POST.get('description')
-    task.is_done = request.POST.get('completed')
+    check = request.POST.get('completed')
+    if check == 'on':
+        task.is_done = True
+    else:
+        task.is_done = False
+    print(task.is_done)
     task.save()
     return redirect('home')
+
+def not_found(request):
+    return render(request,'notfound.html')
     
