@@ -1,3 +1,4 @@
 # Todo list app made with Django Framework
 
-In development...
+Done with Backend.
+Frontend remains
